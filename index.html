@@ -480,27 +480,103 @@
             transform: scale(1.3);
         }
 
-        /* === CARRUSEL EN MÓVIL === */
+        /* === CARRUSEL EN MÓVIL (imagen completa, sin recortes) === */
         @media (max-width: 768px) {
-            .carrusel-container {
-                border-radius: 0;
-                box-shadow: none;
-                margin: 0 -20px; /* sangra al borde */
+            /* El wrapper se extiende al 100% real del viewport, rompiendo el padding del section */
+            .carrusel-wrapper {
+                width: 100vw;
+                max-width: 100vw;
+                margin-left: calc(50% - 50vw);
+                margin-right: calc(50% - 50vw);
+                padding: 0;
             }
 
+            .carrusel-container {
+                max-width: 100%;
+                width: 100%;
+                margin: 0;
+                border-radius: 0;
+                box-shadow: none;
+                overflow: hidden;
+                background-color: #000000;
+            }
+
+            .carrusel-slides {
+                transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+            }
+
+            .slide {
+                min-width: 100%;
+                max-width: 100%;
+                flex: 0 0 100%;
+                overflow: hidden;
+            }
+
+            /* Imagen completa, sin recortes ni deformación: se ve entera, centrada */
             .slide img {
-                height: 260px;
-                object-fit: cover;
+                display: block;
+                width: 100%;
+                height: 62vw;         /* altura proporcional a la pantalla */
+                min-height: 240px;
+                max-height: 340px;
+                object-fit: contain;  /* la fotografía completa siempre visible, sin cortes */
+                object-position: center center;
+                background-color: #000000;
+                margin: 0 auto;
+            }
+
+            /* La franja oscura decorativa no debe tapar la imagen contenida */
+            .slide::after {
+                background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 25%);
             }
 
             .carrusel-btn {
+                top: 50%;
+                bottom: auto;
+                transform: translateY(-50%);
                 width: 36px;
                 height: 36px;
-                font-size: 0.9rem;
+                font-size: 0.8rem;
+                background: rgba(0, 0, 0, 0.5);
+                border: 1px solid rgba(255, 255, 255, 0.25);
+            }
+
+            .carrusel-btn:hover,
+            .carrusel-btn:active {
+                transform: translateY(-50%) scale(1.08);
             }
 
             .btn-prev { left: 10px; }
             .btn-next { right: 10px; }
+
+            .carrusel-dots {
+                margin-top: 14px;
+            }
+        }
+
+        /* Ajustes finos por ancho de pantalla: 480 / 430 / 412 / 390 / 360 / 320px */
+        @media (max-width: 480px) {
+            .slide img { height: 58vw; min-height: 220px; max-height: 300px; }
+        }
+
+        @media (max-width: 430px) {
+            .slide img { height: 56vw; min-height: 210px; max-height: 280px; }
+        }
+
+        @media (max-width: 412px) {
+            .slide img { height: 54vw; min-height: 200px; max-height: 265px; }
+        }
+
+        @media (max-width: 390px) {
+            .slide img { height: 52vw; min-height: 195px; max-height: 250px; }
+        }
+
+        @media (max-width: 360px) {
+            .slide img { height: 50vw; min-height: 185px; max-height: 235px; }
+        }
+
+        @media (max-width: 320px) {
+            .slide img { height: 48vw; min-height: 175px; max-height: 210px; }
         }
 
         /* --- NUEVA GALERÍA BENTO (SOPHISTICATED UX) --- */
@@ -585,6 +661,82 @@
         .bento-overlay p {
             font-size: 0.85rem;
             color: var(--texto-gris);
+        }
+
+        /* --- SECCIÓN: HORARIOS --- */
+        .bg-horarios { background-color: var(--bg-secundario); } /* #1D1D1D, mismo tono que Nosotros */
+
+        .horarios-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .horario-card {
+            background-color: var(--color-tarjeta);
+            padding: 45px 35px;
+            border-radius: var(--radio);
+            border: 1px solid var(--color-borde);
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+        }
+
+        .horario-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #FFFFFF;
+            background-color: var(--color-hover);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .horario-icono {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 22px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background-color: var(--color-secundario);
+            border: 1px solid var(--color-borde);
+            font-size: 1.5rem;
+            color: var(--color-acento);
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .horario-card:hover .horario-icono {
+            border-color: #FFFFFF;
+            background-color: var(--bg-principal);
+        }
+
+        .horario-card h3 {
+            font-family: var(--fuente-titulos);
+            font-size: 1.3rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            margin-bottom: 14px;
+            color: var(--texto-blanco);
+        }
+
+        .horario-hora {
+            font-family: var(--fuente-eyebrow);
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--texto-gris);
+            letter-spacing: 0.5px;
+        }
+
+        .horario-card.cerrado {
+            opacity: 0.82;
+        }
+
+        .horario-card.cerrado .horario-icono {
+            color: var(--texto-gris);
+        }
+
+        @media (max-width: 480px) {
+            .horario-card { padding: 36px 24px; }
         }
 
         /* --- SECCIÓN: PLANES --- */
@@ -887,15 +1039,19 @@
                 grid-template-columns: 1fr;
             }
             .hero-content h1 { font-size: 3.4rem; }
-            .slide img {
-                height: 450px;
-            }
             .galeria-bento {
                 grid-template-columns: repeat(2, 1fr);
             }
             .bento-item.grande {
                 grid-column: span 2;
                 grid-row: span 1;
+            }
+        }
+
+        /* Altura del carrusel solo para tablets (no afecta teléfonos, que usan su propio bloque) */
+        @media (min-width: 769px) and (max-width: 992px) {
+            .slide img {
+                height: 450px;
             }
         }
 
@@ -997,10 +1153,6 @@
             .menu {
                 -webkit-transform: translateZ(0);
                 transform: translateZ(0);
-            }
-            /* Reducir altura carrusel en móvil para menos render */
-            .slide img {
-                height: 260px;
             }
             /* Mapa más compacto en móvil */
             .mapa-container {
@@ -1111,6 +1263,60 @@
             transform: translateY(-3px);
         }
 
+        /* --- PANTALLA DE TRANSICIÓN PREMIUM (antes de cualquier acción) --- */
+        #transicionApex {
+            position: fixed;
+            inset: 0;
+            background-color: #000000;
+            z-index: 100000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        #transicionApex.activa {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
+
+        #transicionApex img {
+            width: 110px;
+            height: auto;
+            opacity: 0;
+            transform: scale(0.7);
+        }
+
+        #transicionApex.activa img {
+            animation: apexTransicionLogo 0.7s ease forwards;
+        }
+
+        @keyframes apexTransicionLogo {
+            0% {
+                opacity: 0;
+                transform: scale(0.7);
+                filter: drop-shadow(0 0 0 rgba(255, 255, 255, 0));
+            }
+            45% {
+                opacity: 1;
+                transform: scale(1.08);
+                filter: drop-shadow(0 0 18px rgba(255, 255, 255, 0.55));
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+                filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.32));
+            }
+        }
+
+        @media (max-width: 768px) {
+            #transicionApex img { width: 84px; }
+        }
+
         .precio-anual-nota {
             display: block;
             font-size: 0.78rem;
@@ -1128,19 +1334,25 @@
         <img src="apex-logo-horizontal.png" alt="Cargando ApexGym">
     </div>
 
+    <!-- PANTALLA DE TRANSICIÓN PREMIUM (se muestra antes de cualquier acción del sitio) -->
+    <div id="transicionApex" aria-hidden="true">
+        <img src="apex-logo-horizontal.png" alt="Apex Gym CR">
+    </div>
+
     <!-- NAVBAR -->
     <header id="siteHeader">
         <div class="nav-container">
-            <a href="#inicio" class="logo"><img src="apex-logo-horizontal.png" alt="Apex Gym & Fitness"></a>
+            <a href="#inicio" class="logo apex-accion"><img src="apex-logo-horizontal.png" alt="Apex Gym & Fitness"></a>
             <button class="mobile-menu-btn" onclick="toggleMenu()"><i class="fa-solid fa-bars"></i></button>
             <nav>
                 <ul class="menu" id="menuNavegacion">
-                    <li><a href="#inicio" onclick="toggleMenu()" data-translate="nav-inicio">Inicio</a></li>
-                    <li><a href="#nosotros" onclick="toggleMenu()" data-translate="nav-nosotros">Nosotros</a></li>
-                    <li><a href="#planes" onclick="toggleMenu()" data-translate="nav-planes">Planes</a></li>
-                    <li><a href="#resenas" onclick="toggleMenu()" data-translate="nav-resenas">Reseñas</a></li>
-                    <li><a href="#ubicacion" onclick="toggleMenu()" data-translate="nav-ubicaciones">Ubicación</a></li>
-                    <li><button class="lang-selector" onclick="toggleIdioma()"><i class="fa-solid fa-globe"></i> <span id="langText">EN</span></button></li>
+                    <li><a href="#inicio" class="apex-accion" data-translate="nav-inicio">Inicio</a></li>
+                    <li><a href="#nosotros" class="apex-accion" data-translate="nav-nosotros">Nosotros</a></li>
+                    <li><a href="#horarios" class="apex-accion" data-translate="nav-horarios">Horarios</a></li>
+                    <li><a href="#planes" class="apex-accion" data-translate="nav-planes">Planes</a></li>
+                    <li><a href="#resenas" class="apex-accion" data-translate="nav-resenas">Reseñas</a></li>
+                    <li><a href="#ubicacion" class="apex-accion" data-translate="nav-ubicaciones">Ubicación</a></li>
+                    <li><button class="lang-selector apex-accion" data-accion="idioma"><i class="fa-solid fa-globe"></i> <span id="langText">EN</span></button></li>
                 </ul>
             </nav>
         </div>
@@ -1152,9 +1364,9 @@
             <span class="hero-eyebrow">Fuerza · Exclusividad · Alto Rendimiento</span>
             <h1 id="hero-titulo">DEFINE TU <span>LÍMITE</span></h1>
             <p id="hero-desc">Fuerza real, equipo de alto rendimiento y una comunidad que no acepta excusas. Entrenamiento premium, sin contratos complicados.</p>
-      <button class="btn-principal"
+      <button class="btn-principal apex-accion"
         data-translate="btn-inscribete"
-        onclick="document.getElementById('planes').scrollIntoView({ behavior: 'smooth' });">
+        data-target="#planes">
     ELIGE TU PLAN
 </button>
         </div>
@@ -1226,7 +1438,32 @@
                         <p data-translate="bento3-d">Equipamiento especializado para entrenamiento cardiovascular</p>
                     </div>
                 </div>
-             
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- SECCIÓN HORARIOS -->
+    <section id="horarios" class="section bg-horarios">
+        <div class="section-inner">
+        <h2 class="titulo-seccion" data-aos="fade-up" data-translate="horarios-titulo">Nuestros <span>Horarios</span></h2>
+        <div class="horarios-grid">
+            <div class="horario-card" data-aos="zoom-in">
+                <div class="horario-icono"><i class="fa-solid fa-dumbbell"></i></div>
+                <h3 data-translate="horario-d1">Lunes a Viernes</h3>
+                <p class="horario-hora">🕔 5:00 AM – 9:00 PM</p>
+            </div>
+            <div class="horario-card" data-aos="zoom-in" data-aos-delay="100">
+                <div class="horario-icono"><i class="fa-solid fa-clock"></i></div>
+                <h3 data-translate="horario-d2">Sábados</h3>
+                <p class="horario-hora">🕕 6:00 AM – 3:00 PM</p>
+            </div>
+            <div class="horario-card cerrado" data-aos="zoom-in" data-aos-delay="200">
+                <div class="horario-icono"><i class="fa-solid fa-calendar-xmark"></i></div>
+                <h3 data-translate="horario-d3">Domingos</h3>
+                <p class="horario-hora">❌ <span data-translate="horario-cerrado-txt">Cerrado</span></p>
+            </div>
+        </div>
         </div>
     </section>
 
@@ -1248,7 +1485,7 @@
                         <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-mensual-l4">Cancela cuando quieras, sin contratos</span></li>
                     </ul>
                 </div>
-                <a href="#" target="_blank" rel="noopener" class="btn-whatsapp btn-comprar-plan" data-plan="mensual">
+                <a href="#" target="_blank" rel="noopener" class="btn-whatsapp btn-comprar-plan apex-accion" data-plan="mensual">
                     <i class="fa-brands fa-whatsapp"></i> <span data-translate="btn-comprar-ahora">Comprar Ahora</span>
                 </a>
             </div>
@@ -1265,7 +1502,25 @@
                         <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-anual-l4">Cancela cuando quieras, sin contratos</span></li>
                     </ul>
                 </div>
-                <a href="#" target="_blank" rel="noopener" class="btn-whatsapp btn-comprar-plan" data-plan="anual">
+                <a href="#" target="_blank" rel="noopener" class="btn-whatsapp btn-comprar-plan apex-accion" data-plan="anual">
+                    <i class="fa-brands fa-whatsapp"></i> <span data-translate="btn-comprar-ahora">Comprar Ahora</span>
+                </a>
+            </div>
+
+            <!-- PLAN ESPECIAL -->
+            <div class="plan-card" id="plan-especial" data-aos="zoom-in" data-aos-delay="200" data-plan="especial">
+                <span class="badge-destacado" data-translate="plan-especial-badge">PLAN ESPECIAL</span>
+                <div>
+                    <h3 data-translate="plan-especial-nombre">Precio Especial</h3>
+                    <p style="color: var(--texto-gris); font-size: 0.85rem; margin-top: -8px; margin-bottom: 22px;" data-translate="plan-especial-sub">Exclusivo para:</p>
+                    <ul>
+                        <li><i class="fa-solid fa-truck-medical" style="color: var(--color-acento);"></i> <span data-translate="plan-especial-l1">🚒 Bomberos</span></li>
+                        <li><i class="fa-solid fa-heart-pulse" style="color: var(--color-acento);"></i> <span data-translate="plan-especial-l2">🚑 Cruzrojistas</span></li>
+                        <li><i class="fa-solid fa-shield-halved" style="color: var(--color-acento);"></i> <span data-translate="plan-especial-l3">👮 Policías</span></li>
+                    </ul>
+                    <div class="precio"><span class="precio-valor">₡15.000</span><span class="precio-periodo" data-translate="mes">/mes</span></div>
+                </div>
+                <a href="#" target="_blank" rel="noopener" class="btn-whatsapp btn-comprar-plan apex-accion" data-plan="especial">
                     <i class="fa-brands fa-whatsapp"></i> <span data-translate="btn-comprar-ahora">Comprar Ahora</span>
                 </a>
             </div>
@@ -1343,7 +1598,7 @@
     <a href="https://maps.app.goo.gl/fFkDsjeB7MgQPd2s7" 
        target="_blank" 
        rel="noopener" 
-       class="btn-secundario" 
+       class="btn-secundario apex-accion" 
        style="margin-top: 20px; display: inline-flex; align-items: center; gap: 10px; font-size: 0.85rem; padding: 14px 28px;">
         <i class="fa-solid fa-diamond-turn-right"></i> 
         <span data-translate="btn-como-llegar">Cómo Llegar</span>
@@ -1353,7 +1608,7 @@
     <a href="https://waze.com/ul?q=APEX%20GYM%20CR%20Santa%20Cruz%20Guanacaste&navigate=yes" 
        target="_blank" 
        rel="noopener" 
-       class="btn-secundario" 
+       class="btn-secundario apex-accion" 
        style="margin-top: 12px; display: inline-flex; align-items: center; gap: 10px; font-size: 0.85rem; padding: 14px 28px;">
         <i class="fa-brands fa-waze"></i>
         <span>Ir con Waze</span>
@@ -1375,18 +1630,19 @@
                 <div class="logo" style="margin-bottom: 20px;"><img src="apex-logo-horizontal.png" alt="Apex Gym & Fitness" style="height: 36px;"></div>
                 <p data-translate="footer-desc">Transformamos tu manera de entrenar. Únete a la revolución del fitness inteligente.</p>
                 <div class="social-icons">
-                    <a href="https://www.instagram.com/apexgym.cr" target="_blank" rel="noopener" aria-label="Instagram de Apex Gym CR"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/people/APEX-GYM-CR/100095014215538/" target="_blank" rel="noopener" aria-label="Facebook de Apex Gym CR"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="mailto:apexgymcr@gmail.com" aria-label="Enviar correo a Apex Gym CR"><i class="fa-solid fa-envelope"></i></a>
+                    <a href="https://www.instagram.com/apexgym.cr" target="_blank" rel="noopener" class="apex-accion" aria-label="Instagram de Apex Gym CR"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/people/APEX-GYM-CR/100095014215538/" target="_blank" rel="noopener" class="apex-accion" aria-label="Facebook de Apex Gym CR"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="mailto:apexgymcr@gmail.com" class="apex-accion" aria-label="Enviar correo a Apex Gym CR"><i class="fa-solid fa-envelope"></i></a>
                 </div>
             </div>
             <div class="footer-col">
                 <h4 data-translate="footer-links-titulo">Enlaces Rápidos</h4>
                 <ul>
-                    <li><a href="#inicio" data-translate="nav-inicio">Inicio</a></li>
-                    <li><a href="#nosotros" data-translate="nav-nosotros">Nosotros</a></li>
-                    <li><a href="#planes" data-translate="nav-planes">Planes</a></li>
-                    <li><a href="#ubicacion" data-translate="nav-ubicaciones">Ubicaciones</a></li>
+                    <li><a href="#inicio" class="apex-accion" data-translate="nav-inicio">Inicio</a></li>
+                    <li><a href="#nosotros" class="apex-accion" data-translate="nav-nosotros">Nosotros</a></li>
+                    <li><a href="#horarios" class="apex-accion" data-translate="nav-horarios">Horarios</a></li>
+                    <li><a href="#planes" class="apex-accion" data-translate="nav-planes">Planes</a></li>
+                    <li><a href="#ubicacion" class="apex-accion" data-translate="nav-ubicaciones">Ubicaciones</a></li>
                    
                 </ul>
             </div>
@@ -1394,7 +1650,7 @@
                 <h4 data-translate="footer-contact-titulo">Contáctanos</h4>
                 <p><i class="fa-solid fa-location-dot"></i> Santa Cruz, Guanacaste, Costa Rica</p>
                 <p><i class="fa-solid fa-phone"></i> +506 6180-8880</p>
-                <p><i class="fa-solid fa-envelope"></i> <a href="mailto:apexgymcr@gmail.com">apexgymcr@gmail.com</a></p>
+                <p><i class="fa-solid fa-envelope"></i> <a href="mailto:apexgymcr@gmail.com" class="apex-accion">apexgymcr@gmail.com</a></p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -1403,7 +1659,7 @@
     </footer>
 
     <!-- BOTÓN FLOTANTE DE WHATSAPP -->
-    <a href="#" target="_blank" rel="noopener" id="whatsappFlotante" class="whatsapp-flotante" aria-label="Escribir por WhatsApp">
+    <a href="#" target="_blank" rel="noopener" id="whatsappFlotante" class="whatsapp-flotante apex-accion" aria-label="Escribir por WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
     </a>
 
@@ -1438,6 +1694,7 @@
         const mensajesWhatsApp = {
             mensual: "Hola, quiero adquirir el Plan Mensual de APEX GYM CR.",
             anual: "Hola, quiero adquirir el Plan Anual de APEX GYM CR.",
+            especial: "Hola, me interesa el Plan Especial para Bomberos, Cruzrojistas y Policías.",
         };
 
         // Genera un enlace wa.me válido con el mensaje codificado correctamente
@@ -1518,12 +1775,42 @@
         carruselContainer.addEventListener('mouseenter', () => clearInterval(autoPlayTimer));
         carruselContainer.addEventListener('mouseleave', iniciarAutoPlay);
 
-        // Touch swipe en móvil
+        // Touch swipe en móvil (mejorado: arrastre en tiempo real + transición suave al soltar)
         let touchStartX = 0;
-        carruselContainer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        let touchActualX = 0;
+        let arrastrando = false;
+        let anchoCarrusel = carruselContainer.offsetWidth;
+
+        window.addEventListener('resize', () => { anchoCarrusel = carruselContainer.offsetWidth; });
+
+        carruselContainer.addEventListener('touchstart', e => {
+            touchStartX = e.touches[0].clientX;
+            touchActualX = touchStartX;
+            arrastrando = true;
+            anchoCarrusel = carruselContainer.offsetWidth;
+            clearInterval(autoPlayTimer);
+            slides.style.transition = 'none';
+        }, { passive: true });
+
+        carruselContainer.addEventListener('touchmove', e => {
+            if (!arrastrando) return;
+            touchActualX = e.touches[0].clientX;
+            const delta = touchActualX - touchStartX;
+            const porcentaje = (delta / anchoCarrusel) * 100;
+            slides.style.transform = `translateX(calc(-${slideActual * 100}% + ${porcentaje}%))`;
+        }, { passive: true });
+
         carruselContainer.addEventListener('touchend', e => {
+            if (!arrastrando) return;
+            arrastrando = false;
+            slides.style.transition = '';
             const diff = touchStartX - e.changedTouches[0].clientX;
-            if (Math.abs(diff) > 40) moverCarrusel(diff > 0 ? 1 : -1);
+            if (Math.abs(diff) > 40) {
+                moverCarrusel(diff > 0 ? 1 : -1);
+            } else {
+                irASlide(slideActual);
+                iniciarAutoPlay();
+            }
         });
 
         iniciarAutoPlay();
@@ -1563,7 +1850,7 @@
         
         const diccionario = {
             'ES': {
-                'nav-inicio': 'Inicio', 'nav-nosotros': 'Nosotros', 'nav-planes': 'Planes', 'nav-resenas': 'Reseñas', 'nav-ubicaciones': 'Ubicación',
+                'nav-inicio': 'Inicio', 'nav-nosotros': 'Nosotros', 'nav-horarios': 'Horarios', 'nav-planes': 'Planes', 'nav-resenas': 'Reseñas', 'nav-ubicaciones': 'Ubicación',
                 'hero-titulo': 'DEFINE TU <span>LÍMITE</span>',
                 'hero-desc': 'Fuerza real, equipo de alto rendimiento y una comunidad que no acepta excusas. Entrenamiento premium, sin contratos complicados.',
                 'btn-inscribete': 'ELIGE TU PLAN',
@@ -1576,7 +1863,11 @@
                 'bento1-t': 'Zona de Fuerza', 'bento1-d': 'Equipamiento de alto rendimiento',
                 'bento2-t': 'Área Funcional', 'bento2-d': 'Espacio para entrenamiento HIIT',
                 'bento3-t': 'Área de Cardio', 'bento3-d': 'Equipamiento especializado para entrenamiento cardiovascular',
-                
+
+                'horarios-titulo': 'Nuestros <span>Horarios</span>',
+                'horario-d1': 'Lunes a Viernes', 'horario-d2': 'Sábados', 'horario-d3': 'Domingos',
+                'horario-cerrado-txt': 'Cerrado',
+
                 'planes-titulo': 'Elige tu <span>Plan</span>',
                 'mes': '/mes', 'anio': '/año',
                 'nota-anual': 'Facturado una vez al año',
@@ -1584,6 +1875,8 @@
                 'plan-mensual-nombre': 'Plan Mensual', 'plan-anual-nombre': 'Plan Anual', 'plan-anual-badge': 'AHORRA 15%',
                 'plan-mensual-l1': 'Acceso completo a la sede de Santa Cruz', 'plan-mensual-l2': 'Área de cardio y musculación', 'plan-mensual-l3': 'App de entrenamiento incluida', 'plan-mensual-l4': 'Cancela cuando quieras, sin contratos',
                 'plan-anual-l1': 'Todo lo del Plan Mensual', 'plan-anual-l2': 'Ahorra un 15% pagando una vez al año', 'plan-anual-l3': 'Invita a un amigo gratis por un mes', 'plan-anual-l4': 'Casillero privado incluido',
+                'plan-especial-badge': 'PLAN ESPECIAL', 'plan-especial-nombre': 'Precio Especial', 'plan-especial-sub': 'Exclusivo para:',
+                'plan-especial-l1': '🚒 Bomberos', 'plan-especial-l2': '🚑 Cruzrojistas', 'plan-especial-l3': '👮 Policías',
                 'resenas-titulo': 'Lo que dicen nuestros <span>Socios</span>',
                 'ubicaciones-titulo': 'Nuestras <span>Ubicaciones</span>',
                 'sede1-t': 'APEX GYM CR', 'sede1-d': 'Segunda planta, frente al edificio del ICE de Santa Cruz, frente a Verdulería Los Cartagos, Santa Cruz, Guanacaste, Costa Rica',
@@ -1595,7 +1888,7 @@
                 'footer-text': 'Inspirado en tendencias de diseño inteligente.'
             },
             'EN': {
-                'nav-inicio': 'Home', 'nav-nosotros': 'About Us', 'nav-planes': 'Plans', 'nav-resenas': 'Reviews', 'nav-ubicaciones': 'Locations',
+                'nav-inicio': 'Home', 'nav-nosotros': 'About Us', 'nav-horarios': 'Hours', 'nav-planes': 'Plans', 'nav-resenas': 'Reviews', 'nav-ubicaciones': 'Locations',
                 'hero-titulo': 'DEFINE YOUR <span>LIMIT</span>',
                 'hero-desc': 'Real strength, high-performance equipment, and a community that doesn\'t accept excuses. Premium training, no complicated contracts.',
                 'btn-inscribete': 'CHOOSE YOUR PLAN',
@@ -1609,6 +1902,11 @@
                 'bento2-t': 'Functional Area', 'bento2-d': 'Space for HIIT training',
                 'bento3-t': 'Cardio Area', 'bento3-d': 'Specialized cardiovascular equipment',
                 'bento4-t': 'Premium Locker Rooms', 'bento4-d': 'Comfort and privacy guaranteed',
+
+                'horarios-titulo': 'Our <span>Hours</span>',
+                'horario-d1': 'Monday to Friday', 'horario-d2': 'Saturdays', 'horario-d3': 'Sundays',
+                'horario-cerrado-txt': 'Closed',
+
                 'planes-titulo': 'Choose Your <span>Plan</span>',
                 'mes': '/month', 'anio': '/year',
                 'nota-anual': 'Billed once per year',
@@ -1616,6 +1914,8 @@
                 'plan-mensual-nombre': 'Monthly Plan', 'plan-anual-nombre': 'Annual Plan', 'plan-anual-badge': 'SAVE 15%',
                 'plan-mensual-l1': 'Full access to the Santa Cruz location', 'plan-mensual-l2': 'Cardio and strength area', 'plan-mensual-l3': 'Training app included', 'plan-mensual-l4': 'Cancel anytime, no contracts',
                 'plan-anual-l1': 'Everything in the Monthly Plan', 'plan-anual-l2': 'Save 15% paying once a year', 'plan-anual-l3': 'Invite a friend for free for a month', 'plan-anual-l4': 'Private locker included',
+                'plan-especial-badge': 'SPECIAL PLAN', 'plan-especial-nombre': 'Special Price', 'plan-especial-sub': 'Exclusive for:',
+                'plan-especial-l1': '🚒 Firefighters', 'plan-especial-l2': '🚑 Red Cross Volunteers', 'plan-especial-l3': '👮 Police Officers',
                 'resenas-titulo': 'What our <span>Members</span> say',
                 'ubicaciones-titulo': 'Our <span>Locations</span>',
                 'sede1-t': 'APEX GYM CR', 'sede1-d': 'Second floor, across from the ICE building in Santa Cruz, facing Verdulería Los Cartagos, Santa Cruz, Guanacaste, Costa Rica',
@@ -1653,6 +1953,65 @@
         // Se ejecuta aquí al final, ya que idiomaActual y diccionario están declarados arriba.
         inicializarWhatsappFlotante();
         actualizarTarjetasPlanes();
+
+        // ==========================================================
+        // --- PANTALLA DE TRANSICIÓN PREMIUM (antes de cualquier acción) ---
+        // ==========================================================
+        // Se muestra ~700ms con el logo de Apex Gym (fade + escala + glow)
+        // antes de ejecutar cambios de sección, enlaces externos, WhatsApp,
+        // Maps, Waze, redes sociales, correo o cualquier botón del menú.
+        // El carrusel y el botón de menú móvil quedan exentos a propósito
+        // para no alterar su funcionamiento ni su fluidez táctil.
+
+        const transicionApex = document.getElementById('transicionApex');
+        const DURACION_TRANSICION = 700;
+
+        function mostrarTransicionApex(accion) {
+            if (transicionApex.classList.contains('activa')) return;
+            transicionApex.classList.add('activa');
+            setTimeout(() => {
+                accion();
+                transicionApex.classList.remove('activa');
+            }, DURACION_TRANSICION);
+        }
+
+        function ejecutarAccionApex(elemento) {
+            // Botón de idioma
+            if (elemento.dataset.accion === 'idioma') {
+                toggleIdioma();
+                return;
+            }
+            // Botones con destino interno explícito (ej. CTA del hero)
+            if (elemento.dataset.target) {
+                const destino = document.querySelector(elemento.dataset.target);
+                if (destino) destino.scrollIntoView({ behavior: 'smooth' });
+                return;
+            }
+            const href = elemento.getAttribute('href');
+            if (!href || href === '#') return;
+
+            if (href.startsWith('#')) {
+                const destino = document.querySelector(href);
+                if (destino) destino.scrollIntoView({ behavior: 'smooth' });
+            } else if (elemento.target === '_blank') {
+                window.open(elemento.href, '_blank', 'noopener');
+            } else {
+                window.location.href = href;
+            }
+
+            // Si el enlace pertenece al menú móvil abierto, se cierra después de navegar
+            const menu = document.getElementById('menuNavegacion');
+            if (elemento.closest('#menuNavegacion') && menu.classList.contains('open')) {
+                toggleMenu();
+            }
+        }
+
+        document.addEventListener('click', function (e) {
+            const elemento = e.target.closest('.apex-accion');
+            if (!elemento) return;
+            e.preventDefault();
+            mostrarTransicionApex(() => ejecutarAccionApex(elemento));
+        });
     </script>
 
     <!-- AOS (Animate On Scroll) -->
