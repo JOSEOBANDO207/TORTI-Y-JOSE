@@ -3,8 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apex Gym &amp; Fitness — Encuentra tu Máximo Nivel</title>
+    <title>Apex Gym CR — Gimnasio Premium en Santa Cruz, Guanacaste</title>
+    <meta name="description" content="APEX GYM CR: gimnasio premium en Santa Cruz, Guanacaste. Equipo de alto rendimiento, clases grupales, ambiente limpio y planes accesibles. Reclama tu lugar hoy.">
+    <meta name="keywords" content="gimnasio Santa Cruz, Apex Gym CR, gym Guanacaste, gimnasio premium Costa Rica, entrenamiento funcional, pesas, cardio, clases grupales Santa Cruz">
+    <meta name="author" content="Apex Gym CR">
+    <link rel="canonical" href="https://apexgymcr.com/">
+    <!-- Open Graph -->
+    <meta property="og:type" content="business.business">
+    <meta property="og:title" content="Apex Gym CR — Gimnasio Premium en Santa Cruz, Guanacaste">
+    <meta property="og:description" content="Fuerza real, equipo de alto rendimiento y una comunidad que no acepta excusas. Entrenamiento premium en Santa Cruz, Guanacaste.">
+    <meta property="og:image" content="apex-logo-horizontal.png">
+    <meta property="og:locale" content="es_CR">
+    <meta property="og:site_name" content="Apex Gym CR">
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Apex Gym CR — Gimnasio Premium en Santa Cruz, Guanacaste">
+    <meta name="twitter:description" content="Entrenamiento premium, sin contratos complicados. Visítanos en Santa Cruz, Guanacaste.">
+    <meta name="twitter:image" content="apex-logo-horizontal.png">
     <link rel="icon" type="image/png" href="assets/logoapex.jpeg">
+    <link rel="apple-touch-icon" href="assets/logoapex.jpeg">
     <!-- Tipografía Apex: display geométrico + cuerpo Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -265,6 +282,18 @@
             background: url('apex-logo-horizontal.png') center 70% / 480px no-repeat;
             opacity: 0.05;
             pointer-events: none;
+        }
+
+        /* --- FONDO EXCLUSIVO PARA CELULARES ---
+           En escritorio se conserva exactamente el fondo original de .hero (sin tocar).
+           En pantallas móviles (≤768px) se sustituye únicamente la imagen de fondo. */
+        @media screen and (max-width: 768px) {
+            .hero {
+                background:
+                    linear-gradient(rgba(23,23,23,0.55), rgba(23,23,23,0.97)),
+                    url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&q=80&w=1080&h=1600') center/cover no-repeat;
+                background-attachment: scroll;
+            }
         }
 
         .hero-eyebrow {
@@ -1221,7 +1250,6 @@
                     <ul>
                         <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-mensual-l1">Acceso completo a la sede de Santa Cruz</span></li>
                         <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-mensual-l2">Área de cardio y musculación</span></li>
-                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-mensual-l3">App de entrenamiento incluida</span></li>
                         <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-mensual-l4">Cancela cuando quieras, sin contratos</span></li>
                     </ul>
                 </div>
@@ -1232,16 +1260,14 @@
 
             <!-- PLAN ANUAL -->
             <div class="plan-card destacado" id="plan-anual" data-aos="zoom-in" data-aos-delay="100" data-plan="anual">
-                <span class="badge-destacado" data-translate="plan-anual-badge">AHORRA 15%</span>
                 <div>
                     <h3 data-translate="plan-anual-nombre">Plan Anual</h3>
-                    <div class="precio"><span class="precio-valor">₡204.000</span><span class="precio-periodo" data-translate="anio">/año</span></div>
+                    <div class="precio"><span class="precio-valor">₡40.000</span><span class="precio-periodo" data-translate="anio">/año</span></div>
                     <p class="precio-anual-nota" style="color: var(--texto-gris); font-size: 0.85rem; margin-top: -18px; margin-bottom: 25px;" data-translate="nota-anual">Facturado una vez al año</p>
                     <ul>
                         <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-anual-l1">Todo lo del Plan Mensual</span></li>
-                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-anual-l2">Ahorra un 15% pagando una vez al año</span></li>
-                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-anual-l3">Invita a un amigo gratis por un mes</span></li>
-                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-anual-l4">Casillero privado incluido</span></li>
+                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-anual-l3">Área de cardio y musculación</span></li>
+                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-anual-l4">Cancela cuando quieras, sin contratos</span></li>
                     </ul>
                 </div>
                 <a href="#" target="_blank" rel="noopener" class="btn-whatsapp btn-comprar-plan" data-plan="anual">
@@ -1262,30 +1288,39 @@
                 <div class="estrellas">
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                 </div>
-                <p class="resena-texto" data-translate="resena1-txt">"Excelente ambiente y maquinaria de primer nivel. El Apex Elite vale cada centavo por los sillones de masaje post-entreno."</p>
+                <p class="resena-texto">"It's clean. Good music. Staff friendly. Machines all work. Spacious. Beautiful wrap around corridor. Beautiful view. Close to everything. Membership is reasonably priced. Great hours."</p>
                 <div class="resena-autor">
-                    <img class="mono-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=100" alt="Socia">
-                    <span>Laura M.</span>
+                    <i class="fa-solid fa-circle-user" style="font-size: 40px; color: var(--texto-gris);"></i>
+                    <div>
+                        <span style="display:block;">Usuario</span>
+                        <span class="resena-fecha" style="text-transform:none; font-weight:400; font-size:0.75rem; color: var(--texto-gris);">Google Reviews</span>
+                    </div>
                 </div>
             </div>
             <div class="resena-card" data-aos="fade-up" data-aos-delay="100">
                 <div class="estrellas">
-                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i>
+                    <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                 </div>
-                <p class="resena-texto" data-translate="resena2-txt">"Muy limpio y espacioso. Me encanta que nunca tengo que hacer fila para usar las caminadoras. Gran servicio."</p>
+                <p class="resena-texto">"El mejor gimnasio y la mejor atención."</p>
                 <div class="resena-autor">
-                    <img class="mono-img" src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=100" alt="Socio">
-                    <span>Diego S.</span>
+                    <i class="fa-solid fa-circle-user" style="font-size: 40px; color: var(--texto-gris);"></i>
+                    <div>
+                        <span style="display:block;">Carlos Leal</span>
+                        <span class="resena-fecha" style="text-transform:none; font-weight:400; font-size:0.75rem; color: var(--texto-gris);">16 de febrero de 2024</span>
+                    </div>
                 </div>
             </div>
             <div class="resena-card" data-aos="fade-up" data-aos-delay="200">
                 <div class="estrellas">
                     <i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i>
                 </div>
-                <p class="resena-texto" data-translate="resena3-txt">"Las clases grupales son increíbles. Los instructores tienen muchísima energía y te motivan a dar lo mejor."</p>
+                <p class="resena-texto">"Es un gimnasio inigualable. El mejor ambiente y las mejores máquinas. Súper recomendado."</p>
                 <div class="resena-autor">
-                    <img class="mono-img" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=100" alt="Socia">
-                    <span>Andrea G.</span>
+                    <i class="fa-solid fa-circle-user" style="font-size: 40px; color: var(--texto-gris);"></i>
+                    <div>
+                        <span style="display:block;">Ana Julia Arguello Rodriguez</span>
+                        <span class="resena-fecha" style="text-transform:none; font-weight:400; font-size:0.75rem; color: var(--texto-gris);">29 de enero de 2024</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1298,14 +1333,17 @@
         <h2 class="titulo-seccion" data-aos="fade-up" data-translate="ubicaciones-titulo">Nuestras <span>Ubicaciones</span></h2>
         <div class="ubicaciones-grid">
             <div class="lista-sedes" data-aos="fade-right">
-                <div class="sede-item activa" onclick="cambiarMapa('https://maps.google.com/maps?q=10.26803,-85.58493&z=17&output=embed', this)">
-                    <h4 data-translate="sede1-t">Sede Santa Cruz</h4>
-                    <p data-translate="sede1-d">7C78+44F, Provincia de Guanacaste, Santa Cruz, Piso 2</p>
+                <div class="sede-item activa">
+                    <h4 data-translate="sede1-t">APEX GYM CR</h4>
+                    <p data-translate="sede1-d">Segunda planta, frente al edificio del ICE de Santa Cruz, frente a Verdulería Los Cartagos, Santa Cruz, Guanacaste, Costa Rica</p>
                     <p style="color: var(--color-acento); font-size: 0.8rem; margin-top: 8px; font-weight: 700;" data-translate="horario">Abierto hasta las 9PM</p>
+                    <a href="https://maps.app.goo.gl/fFkDsjeB7MgQPd2s7" target="_blank" rel="noopener" class="btn-secundario" style="margin-top: 20px; display: inline-flex; align-items: center; gap: 10px; font-size: 0.85rem; padding: 14px 28px;">
+                        <i class="fa-solid fa-diamond-turn-right"></i> <span data-translate="btn-como-llegar">Cómo Llegar</span>
+                    </a>
                 </div>
             </div>
             <div class="mapa-container" data-aos="fade-left">
-                <iframe id="mapaIframe" src="https://maps.google.com/maps?q=10.26803,-85.58493&z=17&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe id="mapaIframe" src="https://maps.google.com/maps?q=10.2624983,-85.5846424&z=17&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Ubicación de APEX GYM CR en Santa Cruz, Guanacaste"></iframe>
             </div>
         </div>
         </div>
@@ -1318,9 +1356,9 @@
                 <div class="logo" style="margin-bottom: 20px;"><img src="apex-logo-horizontal.png" alt="Apex Gym & Fitness" style="height: 36px;"></div>
                 <p data-translate="footer-desc">Transformamos tu manera de entrenar. Únete a la revolución del fitness inteligente.</p>
                 <div class="social-icons">
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="https://www.instagram.com/apexgym.cr" target="_blank" rel="noopener" aria-label="Instagram de Apex Gym CR"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/people/APEX-GYM-CR/100095014215538/" target="_blank" rel="noopener" aria-label="Facebook de Apex Gym CR"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="mailto:apexgymcr@gmail.com" aria-label="Enviar correo a Apex Gym CR"><i class="fa-solid fa-envelope"></i></a>
                 </div>
             </div>
             <div class="footer-col">
@@ -1335,8 +1373,9 @@
             </div>
             <div class="footer-col footer-contact">
                 <h4 data-translate="footer-contact-titulo">Contáctanos</h4>
-                <p><i class="fa-solid fa-location-dot"></i> Costa Rica</p>
+                <p><i class="fa-solid fa-location-dot"></i> Santa Cruz, Guanacaste, Costa Rica</p>
                 <p><i class="fa-solid fa-phone"></i> +506 6180-8880</p>
+                <p><i class="fa-solid fa-envelope"></i> <a href="mailto:apexgymcr@gmail.com">apexgymcr@gmail.com</a></p>
             </div>
         </div>
         <div class="footer-bottom">
@@ -1527,13 +1566,10 @@
                 'plan-mensual-l1': 'Acceso completo a la sede de Santa Cruz', 'plan-mensual-l2': 'Área de cardio y musculación', 'plan-mensual-l3': 'App de entrenamiento incluida', 'plan-mensual-l4': 'Cancela cuando quieras, sin contratos',
                 'plan-anual-l1': 'Todo lo del Plan Mensual', 'plan-anual-l2': 'Ahorra un 15% pagando una vez al año', 'plan-anual-l3': 'Invita a un amigo gratis por un mes', 'plan-anual-l4': 'Casillero privado incluido',
                 'resenas-titulo': 'Lo que dicen nuestros <span>Socios</span>',
-                'resena1-txt': '"Excelente ambiente y maquinaria de primer nivel. El Apex Elite vale cada centavo por los sillones de masaje post-entreno."',
-                'resena2-txt': '"Muy limpio y espacioso. Me encanta que nunca tengo que hacer fila para usar las caminadoras. Gran servicio."',
-                'resena3-txt': '"Las clases grupales son increíbles. Los instructores tienen muchísima energía y te motivan a dar lo mejor."',
                 'ubicaciones-titulo': 'Nuestras <span>Ubicaciones</span>',
-                'sede1-t': 'Sede Centro Financiero', 'sede1-d': 'Av. Principal #123, Piso 1',
-                'sede2-t': 'Sede Plaza Norte', 'sede2-d': 'Centro Comercial Plaza Norte, Local 45',
+                'sede1-t': 'APEX GYM CR', 'sede1-d': 'Segunda planta, frente al edificio del ICE de Santa Cruz, frente a Verdulería Los Cartagos, Santa Cruz, Guanacaste, Costa Rica',
                 'horario': 'Abierto hoy hasta las 23:00',
+                'btn-como-llegar': 'Cómo Llegar',
                 'footer-desc': 'Entrenamiento de alto rendimiento en un espacio diseñado para exigirte más.',
                 'footer-links-titulo': 'Enlaces Rápidos', 'footer-faq': 'Preguntas Frecuentes',
                 'footer-contact-titulo': 'Contacto Sede Principal',
@@ -1562,13 +1598,10 @@
                 'plan-mensual-l1': 'Full access to the Santa Cruz location', 'plan-mensual-l2': 'Cardio and strength area', 'plan-mensual-l3': 'Training app included', 'plan-mensual-l4': 'Cancel anytime, no contracts',
                 'plan-anual-l1': 'Everything in the Monthly Plan', 'plan-anual-l2': 'Save 15% paying once a year', 'plan-anual-l3': 'Invite a friend for free for a month', 'plan-anual-l4': 'Private locker included',
                 'resenas-titulo': 'What our <span>Members</span> say',
-                'resena1-txt': '"Excellent atmosphere and top-tier machinery. The Black Plan is worth every penny for the post-workout massage chairs."',
-                'resena2-txt': '"Very clean and spacious. I love that I never have to wait in line to use the treadmills. Great service."',
-                'resena3-txt': '"The group classes are amazing. The instructors have so much energy and motivate you to give your best."',
                 'ubicaciones-titulo': 'Our <span>Locations</span>',
-                'sede1-t': 'Financial Center Branch', 'sede1-d': 'Main Ave #123, 1st Floor',
-                'sede2-t': 'North Plaza Branch', 'sede2-d': 'North Plaza Shopping Center, Local 45',
+                'sede1-t': 'APEX GYM CR', 'sede1-d': 'Second floor, across from the ICE building in Santa Cruz, facing Verdulería Los Cartagos, Santa Cruz, Guanacaste, Costa Rica',
                 'horario': 'Open today until 23:00',
+                'btn-como-llegar': 'Get Directions',
                 'footer-desc': 'High-performance training in a space built to demand more from you.',
                 'footer-links-titulo': 'Quick Links', 'footer-faq': 'FAQ',
                 'footer-contact-titulo': 'Main Office Contact',
