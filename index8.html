@@ -43,6 +43,9 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        html {
             scroll-behavior: smooth;
         }
 
@@ -349,10 +352,14 @@
             color: var(--texto-blanco);
         }
 
-        /* --- CARRUSEL ORIGINAL (Mejorado visualmente) --- */
+        /* --- CARRUSEL --- */
         .bg-alternativo {
             border-top: 1px solid var(--color-borde);
             border-bottom: 1px solid var(--color-borde);
+        }
+
+        .carrusel-wrapper {
+            position: relative;
         }
 
         .carrusel-container {
@@ -366,15 +373,16 @@
 
         .carrusel-slides {
             display: flex;
-            transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            will-change: transform;
         }
 
         .slide {
             min-width: 100%;
             position: relative;
+            flex-shrink: 0;
         }
         
-        /* Capa oscura sobre el slider para sofisticación */
         .slide::after {
             content: '';
             position: absolute;
@@ -388,7 +396,7 @@
             object-fit: cover;
         }
 
-        /* Botones del carrusel remasterizados */
+        /* Botones del carrusel */
         .carrusel-btn {
             position: absolute;
             top: 50%;
@@ -418,6 +426,53 @@
 
         .btn-prev { left: 20px; }
         .btn-next { right: 20px; }
+
+        /* Dots indicadores */
+        .carrusel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .carrusel-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--color-borde);
+            border: none;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            padding: 0;
+        }
+
+        .carrusel-dot.activo {
+            background: #FFFFFF;
+            transform: scale(1.3);
+        }
+
+        /* === CARRUSEL EN MÓVIL === */
+        @media (max-width: 768px) {
+            .carrusel-container {
+                border-radius: 0;
+                box-shadow: none;
+                margin: 0 -20px; /* sangra al borde */
+            }
+
+            .slide img {
+                height: 260px;
+                object-fit: cover;
+            }
+
+            .carrusel-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 0.9rem;
+            }
+
+            .btn-prev { left: 10px; }
+            .btn-next { right: 10px; }
+        }
 
         /* --- NUEVA GALERÍA BENTO (SOPHISTICATED UX) --- */
         .galeria-wrapper {
@@ -522,7 +577,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
         }
 
         .plan-card:hover {
@@ -823,19 +878,45 @@
             .menu {
                 position: fixed;
                 top: 0; right: -100%;
-                width: 80%; max-width: 350px; height: 100vh;
-                background-color: rgba(23, 23, 23, 0.98);
-                backdrop-filter: blur(15px);
+                width: 80%; max-width: 320px; height: 100vh;
+                background-color: rgba(17, 17, 17, 0.99);
+                backdrop-filter: blur(20px);
                 display: flex;
                 flex-direction: column;
-                justify-content: center;
-                gap: 40px;
-                transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                justify-content: flex-start;
+                align-items: flex-start;
+                gap: 0;
+                padding: 90px 36px 40px 36px;
+                overflow-y: auto;
+                transition: right 0.3s ease;
                 box-shadow: -10px 0 30px rgba(0,0,0,0.8);
                 border-left: 1px solid var(--color-borde);
+                z-index: 1000;
             }
             .menu.open { right: 0; }
-            .menu a { font-size: 1.3rem; }
+            .menu li {
+                width: 100%;
+                border-bottom: 1px solid rgba(255,255,255,0.07);
+                flex-shrink: 0;
+            }
+            .menu li:last-child { 
+                border-bottom: none; 
+                margin-top: 24px; 
+                padding-bottom: 10px;
+            }
+            .menu a {
+                font-size: 1.1rem;
+                display: block;
+                padding: 16px 0;
+                width: 100%;
+            }
+            .menu a::after { display: none; }
+            .lang-selector {
+                margin-top: 0;
+                font-size: 0.9rem;
+                padding: 10px 16px;
+                width: auto;
+            }
 
             .hero-eyebrow { font-size: 0.75rem; letter-spacing: 2px; padding: 6px 14px; }
             .hero-content h1 { font-size: 2.5rem; letter-spacing: 0; }
@@ -858,6 +939,48 @@
             .hero-content h1 { font-size: 2.1rem; }
             .planes-grid { gap: 20px; }
             .plan-card { padding: 40px 26px; }
+        }
+
+        /* --- OPTIMIZACIÓN MÓVIL: deshabilitar efectos pesados en touch --- */
+        @media (max-width: 768px) {
+            /* Eliminar hover transforms en móvil (no aplican en touch y causan repaints) */
+            .plan-card:hover,
+            .plan-card.destacado:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            .resena-card:hover {
+                transform: none;
+                box-shadow: none;
+            }
+            .sede-item:hover, .sede-item.activa {
+                transform: none;
+            }
+            .social-icons a:hover {
+                transform: none;
+            }
+            .btn-principal:hover,
+            .btn-whatsapp:hover {
+                transform: none;
+            }
+            /* Forzar GPU en elementos animados */
+            .carrusel-slides,
+            .menu {
+                -webkit-transform: translateZ(0);
+                transform: translateZ(0);
+            }
+            /* Reducir altura carrusel en móvil para menos render */
+            .slide img {
+                height: 260px;
+            }
+            /* Mapa más compacto en móvil */
+            .mapa-container {
+                height: 320px;
+            }
+            /* Quitar galería bento en móvil para mejorar rendimiento */
+            .galeria-bento .bento-item {
+                height: 200px;
+            }
         }
 
         /* --- PRELOADER --- */
@@ -924,55 +1047,6 @@
                 bottom: 18px;
                 right: 18px;
             }
-        }
-
-        /* --- TOGGLE MENSUAL / ANUAL --- */
-        .planes-toggle-wrap {
-            display: flex;
-            justify-content: center;
-            margin-bottom: 50px;
-        }
-
-        .planes-toggle {
-            display: inline-flex;
-            align-items: center;
-            gap: 14px;
-            background-color: var(--color-tarjeta);
-            border: 1px solid var(--color-borde);
-            border-radius: 40px;
-            padding: 6px;
-        }
-
-        .planes-toggle button {
-            font-family: var(--fuente-eyebrow);
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            background: transparent;
-            border: none;
-            color: var(--texto-gris);
-            padding: 10px 24px;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
-        }
-
-        .planes-toggle button.activo {
-            background-color: #FFFFFF;
-            color: #000000;
-        }
-
-        .badge-ahorro {
-            font-family: var(--fuente-eyebrow);
-            font-size: 0.7rem;
-            font-weight: 700;
-            background-color: var(--color-secundario);
-            color: #FFFFFF;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-left: 6px;
-            vertical-align: middle;
         }
 
         /* --- BOTÓN COMPRAR (WHATSAPP) --- */
@@ -1076,16 +1150,19 @@
         <div class="section-inner">
         <h2 class="titulo-seccion" data-aos="fade-up" data-translate="instalaciones-titulo">Nuestras <span>Instalaciones</span></h2>
 
-        <!-- Carrusel Original (Estilos Modernizados) -->
-        <div class="carrusel-container" data-aos="zoom-in">
-            <div class="carrusel-slides" id="carruselSlides">
-                <div class="slide"><img class="mono-img" src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&q=80&w=1200" alt="Zona Cardio"></div>
-                <div class="slide"><img class="mono-img" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200" alt="Peso Libre"></div>
-                <div class="slide"><img class="mono-img" src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&q=80&w=1200" alt="Maquinaria"></div>
-                <div class="slide"><img class="mono-img" src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&w=1200" alt="Salón de Clases"></div>
+        <!-- Carrusel con auto-play -->
+        <div class="carrusel-wrapper" data-aos="fade-up">
+            <div class="carrusel-container">
+                <div class="carrusel-slides" id="carruselSlides">
+                    <div class="slide"><img class="mono-img" src="https://images.unsplash.com/photo-1517838277536-f5f99be501cd?auto=format&fit=crop&q=80&w=1200" alt="Zona Cardio" loading="lazy"></div>
+                    <div class="slide"><img class="mono-img" src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&q=80&w=1200" alt="Peso Libre" loading="lazy"></div>
+                    <div class="slide"><img class="mono-img" src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?auto=format&fit=crop&q=80&w=1200" alt="Maquinaria" loading="lazy"></div>
+                    <div class="slide"><img class="mono-img" src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?auto=format&fit=crop&q=80&w=1200" alt="Salón de Clases" loading="lazy"></div>
+                </div>
+                <button class="carrusel-btn btn-prev" onclick="moverCarrusel(-1)" aria-label="Anterior"><i class="fa-solid fa-chevron-left"></i></button>
+                <button class="carrusel-btn btn-next" onclick="moverCarrusel(1)" aria-label="Siguiente"><i class="fa-solid fa-chevron-right"></i></button>
             </div>
-            <button class="carrusel-btn btn-prev" onclick="moverCarrusel(-1)"><i class="fa-solid fa-chevron-left"></i></button>
-            <button class="carrusel-btn btn-next" onclick="moverCarrusel(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            <div class="carrusel-dots" id="carruselDots"></div>
         </div>
 
         <!-- Nueva Galería Bento Agregada -->
@@ -1134,30 +1211,48 @@
         <div class="section-inner">
         <h2 class="titulo-seccion" data-aos="fade-up" data-translate="planes-titulo">Elige tu <span>Plan</span></h2>
 
-        <div class="planes-toggle-wrap" data-aos="fade-up">
-            <div class="planes-toggle">
-                <button type="button" id="btnToggleMensual" class="activo" onclick="cambiarPeriodo('mensual')" data-translate="toggle-mensual">Mensual</button>
-                <button type="button" id="btnToggleAnual" onclick="cambiarPeriodo('anual')" data-translate="toggle-anual">Anual</button>
-            </div>
-        </div>
-
         <div class="planes-grid">
 
-            <!-- PLAN BÁSICO -->
-            <div class="plan-card" data-aos="zoom-in" data-plan="basico">
+            <!-- PLAN MENSUAL -->
+            <div class="plan-card" id="plan-mensual" data-aos="zoom-in" data-plan="mensual">
                 <div>
-                    <h3 data-translate="plan-basico-nombre">Básico</h3>
+                    <h3 data-translate="plan-mensual-nombre">Plan Mensual</h3>
                     <div class="precio"><span class="precio-valor">₡20.000</span><span class="precio-periodo" data-translate="mes">/mes</span></div>
                     <ul>
-                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="p1-l1">Acceso a la sede de Santa Cruz</span></li>
-                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="p1-l2">Área de cardio y musculación</span></li>
-                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="p1-l3">App de entrenamiento</span></li>
+                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-mensual-l1">Acceso completo a la sede de Santa Cruz</span></li>
+                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-mensual-l2">Área de cardio y musculación</span></li>
+                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-mensual-l3">App de entrenamiento incluida</span></li>
+                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-mensual-l4">Cancela cuando quieras, sin contratos</span></li>
                     </ul>
                 </div>
-                <a href="#" target="_blank" rel="noopener" class="btn-whatsapp btn-comprar-plan" data-plan="basico">
+                <a href="#" target="_blank" rel="noopener" class="btn-whatsapp btn-comprar-plan" data-plan="mensual">
                     <i class="fa-brands fa-whatsapp"></i> <span data-translate="btn-comprar-ahora">Comprar Ahora</span>
                 </a>
             </div>
+
+            <!-- PLAN ANUAL -->
+            <div class="plan-card destacado" id="plan-anual" data-aos="zoom-in" data-aos-delay="100" data-plan="anual">
+                <span class="badge-destacado" data-translate="plan-anual-badge">AHORRA 15%</span>
+                <div>
+                    <h3 data-translate="plan-anual-nombre">Plan Anual</h3>
+                    <div class="precio"><span class="precio-valor">₡204.000</span><span class="precio-periodo" data-translate="anio">/año</span></div>
+                    <p class="precio-anual-nota" style="color: var(--texto-gris); font-size: 0.85rem; margin-top: -18px; margin-bottom: 25px;" data-translate="nota-anual">Facturado una vez al año</p>
+                    <ul>
+                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-anual-l1">Todo lo del Plan Mensual</span></li>
+                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-anual-l2">Ahorra un 15% pagando una vez al año</span></li>
+                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-anual-l3">Invita a un amigo gratis por un mes</span></li>
+                        <li><i class="fa-solid fa-check" style="color: var(--color-acento);"></i> <span data-translate="plan-anual-l4">Casillero privado incluido</span></li>
+                    </ul>
+                </div>
+                <a href="#" target="_blank" rel="noopener" class="btn-whatsapp btn-comprar-plan" data-plan="anual">
+                    <i class="fa-brands fa-whatsapp"></i> <span data-translate="btn-comprar-ahora">Comprar Ahora</span>
+                </a>
+            </div>
+
+        </div>
+        </div>
+    </section>
+
     <!-- SECCIÓN RESEÑAS -->
     <section id="resenas" class="section bg-entrenadores">
         <div class="section-inner">
@@ -1203,14 +1298,14 @@
         <h2 class="titulo-seccion" data-aos="fade-up" data-translate="ubicaciones-titulo">Nuestras <span>Ubicaciones</span></h2>
         <div class="ubicaciones-grid">
             <div class="lista-sedes" data-aos="fade-right">
-                <div class="sede-item activa" onclick="cambiarMapa('https://maps.app.goo.gl/AYUQ7EcrPwAWL2h97', this)">
+                <div class="sede-item activa" onclick="cambiarMapa('https://maps.google.com/maps?q=10.26803,-85.58493&z=17&output=embed', this)">
                     <h4 data-translate="sede1-t">Sede Santa Cruz</h4>
                     <p data-translate="sede1-d">7C78+44F, Provincia de Guanacaste, Santa Cruz, Piso 2</p>
                     <p style="color: var(--color-acento); font-size: 0.8rem; margin-top: 8px; font-weight: 700;" data-translate="horario">Abierto hasta las 9PM</p>
                 </div>
             </div>
             <div class="mapa-container" data-aos="fade-left">
-                <iframe id="mapaIframe" src="https://maps.app.goo.gl/AYUQ7EcrPwAWL2h97" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen="" loading="lazy"></iframe>
+                <iframe id="mapaIframe" src="https://maps.google.com/maps?q=10.26803,-85.58493&z=17&output=embed" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
         </div>
         </div>
@@ -1281,16 +1376,10 @@
         // Mensaje del botón flotante (no depende de ningún plan)
         const mensajeFlotante = "Hola 👋, me gustaría recibir información sobre los servicios y planes de ApexGym.";
 
-        // Mensajes específicos por plan y periodo de facturación
+        // Mensajes específicos por plan (Mensual / Anual)
         const mensajesWhatsApp = {
-            basico_mensual: "Hola 👋, estoy interesado en adquirir el *Plan Básico Mensual* de ApexGym. ¿Podrían brindarme más información sobre el proceso de inscripción?",
-            basico_anual: "Hola 👋, estoy interesado en adquirir el *Plan Básico Anual* de ApexGym con el descuento anual. ¿Podrían brindarme información?",
-           
-        };
-
-        // Precios por plan y periodo (se usan también para actualizar la tarjeta visualmente)
-        const preciosPlanes = {
-            basico:  { mensual: "₡20.000", anual: "₡40.000" },
+            mensual: "Hola, quiero adquirir el Plan Mensual de APEX GYM CR.",
+            anual: "Hola, quiero adquirir el Plan Anual de APEX GYM CR.",
         };
 
         // Genera un enlace wa.me válido con el mensaje codificado correctamente
@@ -1298,40 +1387,20 @@
             return `https://wa.me/${telefonoEmpresa}?text=${encodeURIComponent(mensaje)}`;
         }
 
-        // Periodo de facturación activo actualmente ('mensual' | 'anual')
-        let periodoActual = 'mensual';
-
-        // Actualiza precios, notas y enlaces de WhatsApp de las 3 tarjetas de planes
-        function actualizarTarjetasPlanes() {
-            document.querySelectorAll('.plan-card[data-plan]').forEach(card => {
-                const plan = card.getAttribute('data-plan');
-
-                // Precio
-                const valor = preciosPlanes[plan][periodoActual];
-                card.querySelector('.precio-valor').textContent = valor;
-                const periodoSpan = card.querySelector('.precio-periodo');
-                const notaAnual = card.querySelector('.precio-anual-nota');
-                if (periodoActual === 'anual') {
-                    periodoSpan.textContent = idiomaActual === 'EN' ? '/year' : '/año';
-                    if (notaAnual) notaAnual.style.display = 'block';
-                } else {
-                    periodoSpan.textContent = idiomaActual === 'EN' ? '/month' : '/mes';
-                    if (notaAnual) notaAnual.style.display = 'none';
-                }
-
-                // Enlace de WhatsApp
-                const boton = card.querySelector('.btn-comprar-plan');
-                const claveMensaje = `${plan}_${periodoActual}`;
-                boton.href = generarEnlaceWhatsApp(mensajesWhatsApp[claveMensaje]);
-            });
+        // Construye la URL directa a la sección del plan usando el dominio actual
+        // (window.location.origin), para que funcione igual en cualquier dominio
+        // donde se publique la página.
+        function generarEnlaceSeccion(plan) {
+            return `${window.location.origin}${window.location.pathname}#plan-${plan}`;
         }
 
-        // Cambia entre Mensual / Anual (llamado desde los botones del toggle)
-        function cambiarPeriodo(periodo) {
-            periodoActual = periodo;
-            document.getElementById('btnToggleMensual').classList.toggle('activo', periodo === 'mensual');
-            document.getElementById('btnToggleAnual').classList.toggle('activo', periodo === 'anual');
-            actualizarTarjetasPlanes();
+        // Actualiza los enlaces de WhatsApp de las tarjetas de planes (Mensual / Anual)
+        function actualizarTarjetasPlanes() {
+            document.querySelectorAll('.btn-comprar-plan[data-plan]').forEach(boton => {
+                const plan = boton.getAttribute('data-plan');
+                const mensajeCompleto = `${mensajesWhatsApp[plan]}\n${generarEnlaceSeccion(plan)}`;
+                boton.href = generarEnlaceWhatsApp(mensajeCompleto);
+            });
         }
 
         // Configura el botón flotante de WhatsApp (mismo enlace en cualquier página/sección)
@@ -1346,16 +1415,60 @@
         let slideActual = 0;
         const slides = document.getElementById('carruselSlides');
         const totalSlides = document.querySelectorAll('.slide').length;
+        let autoPlayTimer;
+
+        // Crear dots dinámicamente
+        const dotsContainer = document.getElementById('carruselDots');
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('button');
+            dot.className = 'carrusel-dot' + (i === 0 ? ' activo' : '');
+            dot.setAttribute('aria-label', `Slide ${i + 1}`);
+            dot.addEventListener('click', () => { irASlide(i); reiniciarAutoPlay(); });
+            dotsContainer.appendChild(dot);
+        }
+
+        function actualizarDots() {
+            document.querySelectorAll('.carrusel-dot').forEach((d, i) => {
+                d.classList.toggle('activo', i === slideActual);
+            });
+        }
+
+        function irASlide(n) {
+            slideActual = n;
+            slides.style.transform = `translateX(-${slideActual * 100}%)`;
+            actualizarDots();
+        }
 
         function moverCarrusel(direccion) {
-            slideActual += direccion;
-            if (slideActual >= totalSlides) {
-                slideActual = 0;
-            } else if (slideActual < 0) {
-                slideActual = totalSlides - 1;
-            }
+            slideActual = (slideActual + direccion + totalSlides) % totalSlides;
             slides.style.transform = `translateX(-${slideActual * 100}%)`;
+            actualizarDots();
+            reiniciarAutoPlay();
         }
+
+        function iniciarAutoPlay() {
+            autoPlayTimer = setInterval(() => moverCarrusel(1), 3500);
+        }
+
+        function reiniciarAutoPlay() {
+            clearInterval(autoPlayTimer);
+            iniciarAutoPlay();
+        }
+
+        // Pausa al hacer hover (solo desktop)
+        const carruselContainer = document.querySelector('.carrusel-container');
+        carruselContainer.addEventListener('mouseenter', () => clearInterval(autoPlayTimer));
+        carruselContainer.addEventListener('mouseleave', iniciarAutoPlay);
+
+        // Touch swipe en móvil
+        let touchStartX = 0;
+        carruselContainer.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, { passive: true });
+        carruselContainer.addEventListener('touchend', e => {
+            const diff = touchStartX - e.changedTouches[0].clientX;
+            if (Math.abs(diff) > 40) moverCarrusel(diff > 0 ? 1 : -1);
+        });
+
+        iniciarAutoPlay();
 
         // --- CAMBIO DE MAPAS ---
         function cambiarMapa(urlMapa, elemento) {
@@ -1407,14 +1520,12 @@
                 'bento3-t': 'Salón Mind & Body', 'bento3-d': 'Yoga, Pilates y estiramiento',
                 'bento4-t': 'Vestidores Premium', 'bento4-d': 'Confort y privacidad garantizada',
                 'planes-titulo': 'Elige tu <span>Plan</span>',
-                'mes': '/mes', 'recomendado': 'RECOMENDADO', 'btn-comprar': 'Comprar', 'btn-comprar-black': 'Unirme a Elite',
-                'toggle-mensual': 'Mensual', 'toggle-anual': 'Anual <span class="badge-ahorro">-15%</span>',
-                'plan-basico-nombre': 'Básico', 'plan-premium-nombre': 'Premium', 'plan-elite-nombre': 'Elite',
+                'mes': '/mes', 'anio': '/año',
                 'nota-anual': 'Facturado una vez al año',
                 'btn-comprar-ahora': 'Comprar Ahora',
-                'p1-l1': 'Acceso a la sede elegida', 'p1-l2': 'Área de cardio y musculación', 'p1-l3': 'App de entrenamiento',
-                'p2-l1': 'Acceso ilimitado a sedes', 'p2-l2': 'Invita a un amigo gratis', 'p2-l3': 'Área de sillones de masaje', 'p2-l4': 'Clases grupales exclusivas',
-                'p3-l1': 'Acceso ilimitado 24/7 a todas las sedes', 'p3-l2': 'Entrenador personal 2x por semana', 'p3-l3': 'Casillero privado y toallas incluidas', 'p3-l4': 'Invitados ilimitados',
+                'plan-mensual-nombre': 'Plan Mensual', 'plan-anual-nombre': 'Plan Anual', 'plan-anual-badge': 'AHORRA 15%',
+                'plan-mensual-l1': 'Acceso completo a la sede de Santa Cruz', 'plan-mensual-l2': 'Área de cardio y musculación', 'plan-mensual-l3': 'App de entrenamiento incluida', 'plan-mensual-l4': 'Cancela cuando quieras, sin contratos',
+                'plan-anual-l1': 'Todo lo del Plan Mensual', 'plan-anual-l2': 'Ahorra un 15% pagando una vez al año', 'plan-anual-l3': 'Invita a un amigo gratis por un mes', 'plan-anual-l4': 'Casillero privado incluido',
                 'resenas-titulo': 'Lo que dicen nuestros <span>Socios</span>',
                 'resena1-txt': '"Excelente ambiente y maquinaria de primer nivel. El Apex Elite vale cada centavo por los sillones de masaje post-entreno."',
                 'resena2-txt': '"Muy limpio y espacioso. Me encanta que nunca tengo que hacer fila para usar las caminadoras. Gran servicio."',
@@ -1444,14 +1555,12 @@
                 'bento3-t': 'Mind & Body Studio', 'bento3-d': 'Yoga, Pilates and stretching',
                 'bento4-t': 'Premium Locker Rooms', 'bento4-d': 'Comfort and privacy guaranteed',
                 'planes-titulo': 'Choose Your <span>Plan</span>',
-                'mes': '/month', 'recomendado': 'RECOMMENDED', 'btn-comprar': 'Buy Now', 'btn-comprar-black': 'Join Elite',
-                'toggle-mensual': 'Monthly', 'toggle-anual': 'Yearly <span class="badge-ahorro">-15%</span>',
-                'plan-basico-nombre': 'Basic', 'plan-premium-nombre': 'Premium', 'plan-elite-nombre': 'Elite',
+                'mes': '/month', 'anio': '/year',
                 'nota-anual': 'Billed once per year',
                 'btn-comprar-ahora': 'Buy Now',
-                'p1-l1': 'Access to the chosen location', 'p1-l2': 'Cardio and bodybuilding area', 'p1-l3': 'Training App',
-                'p2-l1': 'Unlimited access to all locations', 'p2-l2': 'Invite a friend for free', 'p2-l3': 'Massage chairs area', 'p2-l4': 'Exclusive group classes',
-                'p3-l1': '24/7 unlimited access to all locations', 'p3-l2': 'Personal trainer 2x per week', 'p3-l3': 'Private locker and towels included', 'p3-l4': 'Unlimited guest passes',
+                'plan-mensual-nombre': 'Monthly Plan', 'plan-anual-nombre': 'Annual Plan', 'plan-anual-badge': 'SAVE 15%',
+                'plan-mensual-l1': 'Full access to the Santa Cruz location', 'plan-mensual-l2': 'Cardio and strength area', 'plan-mensual-l3': 'Training app included', 'plan-mensual-l4': 'Cancel anytime, no contracts',
+                'plan-anual-l1': 'Everything in the Monthly Plan', 'plan-anual-l2': 'Save 15% paying once a year', 'plan-anual-l3': 'Invite a friend for free for a month', 'plan-anual-l4': 'Private locker included',
                 'resenas-titulo': 'What our <span>Members</span> say',
                 'resena1-txt': '"Excellent atmosphere and top-tier machinery. The Black Plan is worth every penny for the post-workout massage chairs."',
                 'resena2-txt': '"Very clean and spacious. I love that I never have to wait in line to use the treadmills. Great service."',
@@ -1498,10 +1607,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
     <script>
         AOS.init({
-            duration: 800,
+            duration: 350,
             once: true,
-            offset: 80,
-            easing: 'ease-out-cubic'
+            offset: 40,
+            easing: 'ease-out',
+            disable: function() {
+                // Deshabilitar AOS completamente en móvil para máximo rendimiento
+                return window.innerWidth < 768;
+            }
         });
     </script>
 </body>
